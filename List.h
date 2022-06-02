@@ -12,8 +12,12 @@ public:
     List(long size = 10);
     virtual ~List();
 
+    void push(const T& item);
+
     const T& get(long index) const;
 
+    const T& first() const;
+    const T& last() const;
     long count() const;
 
 private:
@@ -30,6 +34,29 @@ template <typename T>
 List<T>::~List()
 {
     PFL
+}
+
+template <typename T>
+void List<T>::push(const T& item)
+{
+    data_.push_back(item);
+}
+
+template <typename T>
+const T& List<T>::first() const
+{
+    // TODO throw if emtpy?
+    FL
+    std::cout << *(data_.begin()) << std::endl;
+    return *(data_.begin());
+}
+
+template <typename T>
+const T& List<T>::last() const
+{
+    // TODO throw if emtpy?
+    FL
+    return *(std::prev(data_.end()));
 }
 
 template <typename T>
