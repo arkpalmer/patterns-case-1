@@ -18,5 +18,18 @@ int main()
     cout << "after push 82: li count:" << li.count() << endl;
     cout << li.last() << endl;
 
+    List_iterator<int> lit(&li);
+
+    // test of except
+    List<int> li2(0);
+    try
+    {
+     cout << li2.first() << endl;   
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }    
+
     return 0;
 }

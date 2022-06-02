@@ -2,8 +2,10 @@
 
 #include <iostream>
 #include <vector>
+#include <exception>
 
 #include "Utils.h"
+#include "Iterator.h"
 
 template <typename T>
 class List
@@ -45,17 +47,28 @@ void List<T>::push(const T& item)
 template <typename T>
 const T& List<T>::first() const
 {
-    // TODO throw if emtpy?
-    FL
+    PFL
+    
+    if (count() == 0)
+    {        
+        throw std::out_of_range("List<T>::first() exception : list is empty");
+    }
+    
     std::cout << *(data_.begin()) << std::endl;
+
     return *(data_.begin());
 }
 
 template <typename T>
 const T& List<T>::last() const
 {
-    // TODO throw if emtpy?
     FL
+
+    if (count() == 0)
+    {        
+        throw std::out_of_range("List<T>::last() exception : list is empty");
+    }
+
     return *(std::prev(data_.end()));
 }
 
@@ -68,6 +81,10 @@ long List<T>::count() const
 template <typename T>
 const T& List<T>::get(long index) const
 {
-    // TODO you could have some kind of try or other check
+    if (count() == 0 || index >= count())
+    {        
+        throw std::out_of_range("List<T>::last() exception : list is empty");
+    }
+
     return data_[index];
 }
