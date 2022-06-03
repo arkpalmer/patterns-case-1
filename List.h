@@ -8,10 +8,30 @@
 #include "Iterator.h"
 
 template <typename T>
-class List
+class Abstract_list
 {
 public:
-    List(long size = 10);
+    virtual Iterator<T>* create_iterator() = 0;
+
+    virtual ~Abstract_list() { }
+
+    virtual void push(const T& item) = 0;
+
+    virtual const T& get(long index) const = 0;
+
+    virtual const T& first() const = 0;
+    virtual const T& last() const = 0;
+    virtual long count() const = 0;
+};
+
+template <typename T>
+class List : public Abstract_list<T>
+{
+public:
+    // what is the purpose of starting with 10? how to add the first new item?? push_back would put
+    // it at 11th entry - maybe List api in book has [] operator etc TODO
+    //List(long size = 10); 
+    List(long size = 0);
     virtual ~List();
 
     void push(const T& item);
@@ -22,9 +42,17 @@ public:
     const T& last() const;
     long count() const;
 
+    Iterator<T>* create_iterator() override;
+
 private:
     std::vector<T> data_;
 };
+
+template <typename T>
+Iterator<T>* List<T>::create_iterator() 
+{
+    return new List_iterator<T>(this);
+}
 
 template <typename T>
 List<T>::List(long size) :
