@@ -34,13 +34,13 @@ public:
     List(long size = 0);
     virtual ~List();
 
-    void push(const T& item);
+    void push(const T& item) override;
 
-    const T& get(long index) const;
+    const T& get(long index) const override;
 
-    const T& first() const;
-    const T& last() const;
-    long count() const;
+    const T& first() const override;
+    const T& last() const override;
+    long count() const override;
 
     Iterator<T>* create_iterator() override;
 

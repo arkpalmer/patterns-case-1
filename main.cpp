@@ -2,8 +2,27 @@
 
 #include "List.h"
 #include "Menu.h"
+#include "Iterator.h"
+#include "Traverser.h"
 
 using namespace std;
+
+void print_menus(Iterator<Menu*>& it)
+{
+    FL
+
+    while (!it.is_done())
+    {
+        cout << "menu:" << endl;
+        it.current_item()->print();
+        it.next();
+    }
+}
+
+void foo(List<Menu*>* ml)
+{
+
+}
 
 int main()
 {
@@ -15,8 +34,34 @@ int main()
     Abstract_list<Menu*>* menu_list;
     menu_list = new List<Menu*>();
     menu_list->push(new Menu("Scotty's Diner"));
+    menu_list->push(new Menu("Zolas"));
+
+    auto dl = dynamic_cast<List<Menu*>*>(menu_list);
+
+    if (dl)
+    {
+        //foo(dl);
+        auto menu_traverser = new Print_menus<Menu*>(dl);
+
+        //
+        // internal iterator (p268)
+        //
+        menu_traverser->traverse();
+    }
+
+    return 0;
+
+    //auto ml = dynamic_cast<Menu*>...
+    Print_menus<Menu*> menu_printer(static_cast<List<Menu*>*>(menu_list));
+    //uto menu_traverser = new List_traverser<Menu*>(menu_list);
 
     auto it = menu_list->create_iterator();
+
+    print_menus(*it);
+    it->first(); // check setting back to first works by printing again
+    print_menus(*it);
+
+    // NEXT p266 print_employees
 
     while (!it->is_done())
     {
