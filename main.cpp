@@ -40,13 +40,16 @@ int main()
 
     if (dl)
     {
+        Print_menus<Menu*> pm(dl);
+        pm.traverse();
+
         //foo(dl);
-        auto menu_traverser = new Print_menus<Menu*>(dl);
+        //auto menu_traverser = new Print_menus<Menu*>(dl);
 
         //
         // internal iterator (p268)
         //
-        menu_traverser->traverse();
+        //menu_traverser->traverse();
     }
 
     return 0;

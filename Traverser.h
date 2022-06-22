@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Iterator.h"
+//#include "Menu.h"
 
 template <typename T>
 class List_traverser
@@ -35,4 +36,8 @@ bool List_traverser<T>::traverse()
     return result;
 }
 
+// class Print_menus : public List_traverser<Menu*> 
+// {
+
+// };
 // next subclass Print_menus : public List_traverser<Menu*> {};
