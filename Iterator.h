@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Utils.h"
+
 template <typename T>
 class Iterator
 {

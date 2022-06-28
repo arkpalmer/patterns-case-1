@@ -33,8 +33,8 @@ int main()
     //
     Abstract_list<Menu*>* menu_list;
     menu_list = new List<Menu*>();
-    menu_list->push(new Menu("Scotty's Diner"));
-    menu_list->push(new Menu("Zolas"));
+    menu_list->push(new Diner_menu("Scotty's Diner"));
+    menu_list->push(new Cafe_menu("Zolas Cafe"));
 
     auto dl = dynamic_cast<List<Menu*>*>(menu_list);
 
