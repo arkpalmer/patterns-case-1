@@ -33,11 +33,13 @@ public:
 
     // shouldn't Menu be abstract?
 
+    //void print(const std::string& extra = "") const; 
+
     virtual void print() const; 
 
     virtual ~Menu();
 
-private:
+protected:
     std::string name_;
 };
 
@@ -69,6 +71,8 @@ public:
     void add_item(const std::string& name, const std::string& desc, bool vegan, double price);
 
     virtual ~Cafe_menu();
+
+    void print() const override;
 
 private:
     using Item_pair = std::pair<std::string, Menu_item*>;

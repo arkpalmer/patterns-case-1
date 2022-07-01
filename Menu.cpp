@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "Menu.h"
 #include "Utils.h"
 
@@ -12,8 +14,9 @@ Menu::~Menu()
 }
 
 void Menu::print() const
+//void Menu::print(const std::string& extra) const
 {
-    std::cout << "Menu name: " << name_ << std::endl;
+    std::cout << "Menu name: " << name_ << endl;
 
     std::cout << " items:" << std::endl;
     // for (const auto& item : items_)
@@ -48,14 +51,14 @@ void Diner_menu::add_item(const std::string& name, const std::string& desc, bool
 
 void Diner_menu::print() const 
 {
-    Menu::print();
+    cout << __PRETTY_FUNCTION__ << endl;
+
+    cout << name_ << " (Diner)" << endl;
 
     for (const auto& item : *items_)
     {
         cout << item->name() << endl;
     }
-
-    cout << __PRETTY_FUNCTION__ << endl;
 }
 
 Cafe_menu::Cafe_menu(const std::string& name) :
@@ -78,4 +81,16 @@ Cafe_menu::~Cafe_menu()
 void Cafe_menu::add_item(const std::string& name, const std::string& desc, bool vegan, double price)
 {
     items_->insert(Item_pair(name, new Menu_item(name, desc, vegan, price)));
+}
+
+void Cafe_menu::print() const 
+{
+    cout << __PRETTY_FUNCTION__ << endl;
+
+    cout << name_ << " (Cafe)" << endl;
+
+    for (const auto& [name, item] : *items_)
+    {
+        cout << name << " -> " << item->name() << endl;
+    }
 }
