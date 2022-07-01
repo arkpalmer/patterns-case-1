@@ -33,7 +33,7 @@ public:
 
     // shouldn't Menu be abstract?
 
-    void print() const;
+    virtual void print() const; 
 
     virtual ~Menu();
 
@@ -50,12 +50,13 @@ public:
 
     void add_item(const std::string& name, const std::string& desc, bool vegan, double price);
 
+    void print() const override;
+
     virtual ~Diner_menu();
 
 private:
-    std::list<Menu_item*> items_;
+    std::list<Menu_item*>* items_;
 };
-
 
 //
 // Cafe_menu uses a different storage method - for demonstrating the iterator
@@ -72,7 +73,7 @@ public:
 private:
     using Item_pair = std::pair<std::string, Menu_item*>;
     //std::map<Item_pair> items_;
-    std::map<std::string, Menu_item*> items_;
+    std::map<std::string, Menu_item*>* items_;
     //std::list<std::string, Menu_item*> items_;
 };
 
