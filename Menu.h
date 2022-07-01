@@ -10,6 +10,8 @@
 class Menu_item
 {
 public:
+//    Menu_item() {} // just for testing other code
+
     Menu_item(const std::string& name, const std::string& desc, bool vegan, double price) :
         name_(name), description_(desc), vegan_(vegan), price_(price) {}
 
@@ -33,6 +35,7 @@ public:
 
     // shouldn't Menu be abstract?
 
+    virtual Iterator<Menu_item*>* create_iterator() const = 0;
     void print() const;
 
     virtual ~Menu();
@@ -48,12 +51,14 @@ public:
 
     Diner_menu(const std::string& name);
 
+    Iterator<Menu_item*>* create_iterator() const override;
+
     void add_item(const std::string& name, const std::string& desc, bool vegan, double price);
 
     virtual ~Diner_menu();
 
 private:
-    std::list<Menu_item*> items_;
+    std::list<Menu_item*> items_; // maybe a pointer to - but lots of ripple changes
 };
 
 
@@ -66,6 +71,8 @@ public:
     Cafe_menu(const std::string& name);
 
     void add_item(const std::string& name, const std::string& desc, bool vegan, double price);
+
+    Iterator<Menu_item*>* create_iterator() const override;
 
     virtual ~Cafe_menu();
 

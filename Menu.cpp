@@ -1,6 +1,8 @@
 #include "Menu.h"
 #include "Utils.h"
 
+#include "Menu_iterators.h"
+
 Menu::~Menu()
 {
     // for (auto& item : items_)
@@ -36,6 +38,11 @@ Diner_menu::~Diner_menu()
     }
 }
 
+Iterator<Menu_item*>* Diner_menu::create_iterator() const
+{
+    return new Diner_menu_iterator(&items_);
+}
+
 void Diner_menu::add_item(const std::string& name, const std::string& desc, bool vegan, double price)
 {
     items_.push_back(new Menu_item(name, desc, vegan, price));
@@ -54,6 +61,11 @@ Cafe_menu::~Cafe_menu()
     {
         delete item;
     }
+}
+
+Iterator<Menu_item*>* Cafe_menu::create_iterator() const 
+{
+    return nullptr;
 }
 
 void Cafe_menu::add_item(const std::string& name, const std::string& desc, bool vegan, double price)

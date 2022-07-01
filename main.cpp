@@ -4,6 +4,7 @@
 #include "Menu.h"
 #include "Iterator.h"
 #include "Traverser.h"
+#include "Waitress.h"
 
 using namespace std;
 
@@ -27,6 +28,10 @@ void foo(List<Menu*>* ml)
 int main()
 {
     FL
+
+    Waitress waitress;
+
+    waitress.print_menus();
 
     //
     // don't commit to a specific List implementation
@@ -74,6 +79,7 @@ int main()
 
     return 0;
 
+#if 0
     //Menu* m = new Menu("Scotty's Diner");
     List<Menu*> menus;
     Menu m("Diner");
@@ -113,6 +119,7 @@ int main()
     {
         std::cerr << e.what() << '\n';
     }    
+#endif
 
     return 0;
 }
