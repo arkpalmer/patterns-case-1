@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "Menu.h"
+#include "Menu_iterators.h"
 #include "Utils.h"
 
 using namespace std;
@@ -61,6 +62,11 @@ void Diner_menu::print() const
     }
 }
 
+Iterator<Menu_item*>* Diner_menu::create_iterator() const
+{
+    return new Diner_menu_iterator(items_);
+}
+
 Cafe_menu::Cafe_menu(const std::string& name) :
     Menu(name)
 {
@@ -93,4 +99,9 @@ void Cafe_menu::print() const
     {
         cout << name << " -> " << item->name() << endl;
     }
+}
+
+Iterator<Menu_item*>* Cafe_menu::create_iterator() const
+{
+    return nullptr; //new Cafe_menu_iterator(&items_);
 }

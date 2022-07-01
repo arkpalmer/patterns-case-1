@@ -34,6 +34,7 @@ public:
     // shouldn't Menu be abstract?
 
     //void print(const std::string& extra = "") const; 
+    virtual Iterator<Menu_item*>* create_iterator() const = 0;
 
     virtual void print() const; 
 
@@ -54,6 +55,8 @@ public:
 
     void print() const override;
 
+    Iterator<Menu_item*>* create_iterator() const override;
+
     virtual ~Diner_menu();
 
 private:
@@ -73,6 +76,8 @@ public:
     virtual ~Cafe_menu();
 
     void print() const override;
+
+    Iterator<Menu_item*>* create_iterator() const override;
 
 private:
     using Item_pair = std::pair<std::string, Menu_item*>;
