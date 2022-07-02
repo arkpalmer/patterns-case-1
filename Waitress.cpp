@@ -18,7 +18,6 @@ void Waitress::print_menus() const
         cout << "diner_menu_ is nullptr" << endl;
         return;
     }
-#if 0
     auto diner_iter = diner_menu_->create_iterator();
 
     if (diner_iter == nullptr)
@@ -29,8 +28,8 @@ void Waitress::print_menus() const
 
     while (!diner_iter->is_done())
     {
-        diner_iter->current_item();
+        auto item = diner_iter->current_item();
+        cout << item->description() << endl;
         diner_iter->next();
     }
-#endif
 }
