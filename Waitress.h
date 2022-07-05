@@ -1,4 +1,5 @@
 #include "Menu.h"
+#include "List.h"
 
 class Waitress
 {
@@ -6,6 +7,9 @@ public:
     Waitress();
 
     void print_menus() const;
+
 private:
-    Diner_menu* diner_menu_;
+    void print_menu(const Menu* menu) const;
+
+    List<Menu*> menus_;
 };

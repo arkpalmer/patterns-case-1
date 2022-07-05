@@ -5,6 +5,7 @@
 #include <list>
 #include <map>
 
+#include "List.h"
 #include "Traverser.h"
 
 class Menu_item
@@ -39,6 +40,8 @@ public:
     virtual void print() const; 
 
     virtual ~Menu();
+
+    std::string name() const { return name_; }
 
 protected:
     std::string name_;
@@ -84,6 +87,23 @@ private:
     //std::map<Item_pair> items_;
     std::map<std::string, Menu_item*>* items_;
     //std::list<std::string, Menu_item*> items_;
+};
+
+class Dessert_menu : public Menu
+{
+public:
+    Dessert_menu(const std::string& name);
+
+    void add_item(const std::string& name, const std::string& desc, bool vegan, double price);
+
+    virtual ~Dessert_menu();
+
+    void print() const override;
+
+    Iterator<Menu_item*>* create_iterator() const override;
+
+private:
+    List<Menu_item*>* items_;
 };
 
 template <typename T>

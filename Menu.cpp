@@ -103,5 +103,45 @@ void Cafe_menu::print() const
 
 Iterator<Menu_item*>* Cafe_menu::create_iterator() const
 {
-    return nullptr; //new Cafe_menu_iterator(&items_);
+    return new Cafe_menu_iterator(items_);
+}
+
+Dessert_menu::Dessert_menu(const std::string& name) : 
+   Menu(name)
+{
+    items_ = new List<Menu_item*>();
+
+    add_item("Coward Cake", "piss, sugar, flour", true, 2.99);
+    //add_item("Continental", "Oatmeal, fruit cup, muffin", true, 3.99);
+}
+
+Dessert_menu::~Dessert_menu()
+{
+    //for (auto& [key, item] : *items_)
+    //{
+        //delete item;
+    //}
+}
+
+void Dessert_menu::add_item(const std::string& name, const std::string& desc, bool vegan, double price)
+{
+    items_->push(new Menu_item(name, desc, vegan, price));
+}
+
+void Dessert_menu::print() const 
+{
+    cout << __PRETTY_FUNCTION__ << endl;
+
+    cout << name_ << " (Dessert)" << endl;
+
+    for (unsigned i = 0; i < items_->count(); ++i)
+    {
+        auto item = items_->get(i);
+        cout << "name:" << item->name() << ": "  << item->description() << endl;
+    }
+}
+
+Iterator<Menu_item*>* Dessert_menu::create_iterator() const
+{
+    return new List_iterator(items_);
 }

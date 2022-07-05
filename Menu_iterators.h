@@ -20,7 +20,6 @@ public:
        diner_menu_(menu_list)
     {
         first();
-        //list_iter_ = diner_menu_->begin();
     }
 
     void first() 
@@ -58,4 +57,52 @@ private:
     std::list<Menu_item*>::const_iterator list_iter_;
     //std::list<Menu_item*>::iterator list_iter_;
     const std::list<Menu_item*>* diner_menu_;
+};
+
+class Cafe_menu_iterator : public Iterator<Menu_item*>
+{
+public:
+    //Cafe_menu_iterator() {} // explicit?
+    //     std::map<std::string, Menu_item*>* items_;
+    Cafe_menu_iterator(std::map<std::string, Menu_item*>* menu_list) :
+       cafe_menu_(menu_list)
+    {
+        first();
+    }
+
+    void first() 
+    {
+        list_iter_ = cafe_menu_->begin();
+    }
+
+    // advance the iterator
+    void next() 
+    {
+        if (!is_done())
+        {
+            list_iter_++;
+        }
+    }
+
+    // true if iterator does not refer to an element
+    bool is_done() const 
+    { 
+        return (list_iter_ == cafe_menu_->end()); 
+    }
+
+    Menu_item* current_item() const 
+    { 
+        if (is_done())
+        {
+            return nullptr; // throw?
+        }
+
+        return list_iter_->second; 
+    }
+
+private:
+    //
+    std::map<std::string, Menu_item*>::const_iterator list_iter_;
+    //std::list<Menu_item*>::iterator list_iter_;
+    const std::map<std::string, Menu_item*>* cafe_menu_;
 };
