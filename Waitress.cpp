@@ -11,25 +11,12 @@ Waitress::Waitress()
     menus_.push(new Dessert_menu("Wimps Desserts"));
 }
 
-//TODO dtor
-
-void Waitress::print_menu(const Menu* menu) const
+Waitress::~Waitress()
 {
-    cout << endl << "print_menu .... "  << menu->name() << endl;
-
-    auto menu_iter = menu->create_iterator();
-
-    if (menu_iter == nullptr)
+    for (int i = 0; i < menus_.count(); ++i)
     {
-        cout << "iter is nullptr" << endl;
-        return;
-    }
-
-    while (!menu_iter->is_done())
-    {
-        auto item = menu_iter->current_item();
-        cout << item->description() << endl;
-        menu_iter->next();
+        auto menu = menus_.get(i);
+        delete menu;
     }
 }
 
@@ -39,45 +26,8 @@ void Waitress::print_menus() const
     {
         auto menu = menus_.get(i);
         cout << endl;
-        menu->print();
-        //print_menu(menu);
+        menu->print(); // menu prints itself - earlier version had Waitress printing the details
     }
 
-#if 0
-    // HERE - TODO general solution
-    if (diner_menu_ == nullptr)
-    {
-        cout << "diner_menu_ is nullptr" << endl;
-        return;
-    }
-    auto diner_iter = diner_menu_->create_iterator();
-
-    if (diner_iter == nullptr)
-    {
-        cout << "iter is nullptr" << endl;
-        return;
-    }
-
-    while (!diner_iter->is_done())
-    {
-        auto item = diner_iter->current_item();
-        cout << item->description() << endl;
-        diner_iter->next();
-    }
-
-    auto cafe_iter = cafe_menu_->create_iterator();
-
-    if (cafe_iter == nullptr)
-    {
-        cout << "iter is nullptr" << endl;
-        return;
-    }
-
-    while (!cafe_iter->is_done())
-    {
-        auto item = cafe_iter->current_item();
-        cout << item->description() << endl;
-        cafe_iter->next();
-    }
-#endif
+    cout << endl;
 }

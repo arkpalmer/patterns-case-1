@@ -8,16 +8,24 @@
 #include "List.h"
 #include "Traverser.h"
 
+//using std::cout;  omg, what's wrong with this?
+//using std::endl;
+
 class Menu_item
 {
 public:
     Menu_item(const std::string& name, const std::string& desc, bool vegan, double price) :
         name_(name), description_(desc), vegan_(vegan), price_(price) {}
 
+    ~Menu_item() { std::cout << "~Menu_item:" << name_ << std::endl; }
+
     std::string name() const { return name_; }
     double price() const     { return price_; }
     std::string description() const { return description_; }
     bool is_vegan() const    { return vegan_; }
+
+    // todo operator<<
+    void print() const;
 
 private:
     std::string name_;
@@ -37,7 +45,7 @@ public:
     //void print(const std::string& extra = "") const; 
     virtual Iterator<Menu_item*>* create_iterator() const = 0;
 
-    virtual void print() const; 
+    virtual void print() const = 0; 
 
     virtual ~Menu();
 

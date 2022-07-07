@@ -63,7 +63,6 @@ List<T>::List(long size) :
 template <typename T>
 List<T>::~List()
 {
-    PFL
 }
 
 template <typename T>

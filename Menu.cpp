@@ -6,24 +6,24 @@
 
 using namespace std;
 
-Menu::~Menu()
+void delete_menu_items(Iterator<Menu_item*>* items_iter)
 {
-    // for (auto& item : items_)
-    // {
-    //     delete item;
-    // }
+    while (!items_iter->is_done())
+    {
+        auto item = items_iter->current_item();
+        //cout << "dtor: " << item->description() << endl;
+        delete item;
+        items_iter->next();
+    }
 }
 
-void Menu::print() const
-//void Menu::print(const std::string& extra) const
+void Menu_item::print() const
 {
-    std::cout << "Menu name: " << name_ << endl;
+    cout << name_ << ": " << description_ << endl;
+}
 
-    std::cout << " items:" << std::endl;
-    // for (const auto& item : items_)
-    // {
-    //     std::cout << "   " << item->name() << std::endl;
-    // }
+Menu::~Menu()
+{
 }
 
 Diner_menu::Diner_menu(const std::string& name) :
@@ -37,10 +37,7 @@ Diner_menu::Diner_menu(const std::string& name) :
 
 Diner_menu::~Diner_menu()
 {
-    for (auto& item : *items_)
-    {
-        delete item;
-    }
+    delete_menu_items(create_iterator());
 
     delete items_;
 }
@@ -52,13 +49,11 @@ void Diner_menu::add_item(const std::string& name, const std::string& desc, bool
 
 void Diner_menu::print() const 
 {
-    cout << __PRETTY_FUNCTION__ << endl;
-
     cout << name_ << " (Diner)" << endl;
 
     for (const auto& item : *items_)
     {
-        cout << item->name() << endl;
+        item->print();
     }
 }
 
@@ -78,10 +73,9 @@ Cafe_menu::Cafe_menu(const std::string& name) :
 
 Cafe_menu::~Cafe_menu()
 {
-    for (auto& [key, item] : *items_)
-    {
-        delete item;
-    }
+    delete_menu_items(create_iterator());
+    
+    delete items_;
 }
 
 void Cafe_menu::add_item(const std::string& name, const std::string& desc, bool vegan, double price)
@@ -91,13 +85,11 @@ void Cafe_menu::add_item(const std::string& name, const std::string& desc, bool 
 
 void Cafe_menu::print() const 
 {
-    cout << __PRETTY_FUNCTION__ << endl;
-
     cout << name_ << " (Cafe)" << endl;
 
     for (const auto& [name, item] : *items_)
     {
-        cout << name << " -> " << item->name() << endl;
+        item->print();
     }
 }
 
@@ -117,10 +109,9 @@ Dessert_menu::Dessert_menu(const std::string& name) :
 
 Dessert_menu::~Dessert_menu()
 {
-    //for (auto& [key, item] : *items_)
-    //{
-        //delete item;
-    //}
+    delete_menu_items(create_iterator());
+    
+    delete items_;
 }
 
 void Dessert_menu::add_item(const std::string& name, const std::string& desc, bool vegan, double price)
@@ -130,14 +121,12 @@ void Dessert_menu::add_item(const std::string& name, const std::string& desc, bo
 
 void Dessert_menu::print() const 
 {
-    cout << __PRETTY_FUNCTION__ << endl;
-
     cout << name_ << " (Dessert)" << endl;
 
     for (unsigned i = 0; i < items_->count(); ++i)
     {
         auto item = items_->get(i);
-        cout << "name:" << item->name() << ": "  << item->description() << endl;
+        item->print();
     }
 }
 

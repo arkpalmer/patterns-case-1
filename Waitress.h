@@ -5,11 +5,11 @@ class Waitress
 {
 public:
     Waitress();
+    ~Waitress();
 
     void print_menus() const;
 
 private:
-    void print_menu(const Menu* menu) const;
 
     List<Menu*> menus_;
 };
