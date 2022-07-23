@@ -7,8 +7,10 @@ using namespace std;
 Waitress::Waitress()
 {
     menus_.push(new Diner_menu("Mo's Diner"));
-    menus_.push(new Cafe_menu("Loser Cafe"));
-    menus_.push(new Dessert_menu("Wimps Desserts"));
+    
+    // TODO come back to these, get new version working with Diner_menu first
+    //menus_.push(new Cafe_menu("Loser Cafe"));
+    //menus_.push(new Dessert_menu("Wimps Desserts"));
 }
 
 Waitress::~Waitress()

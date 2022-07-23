@@ -4,6 +4,7 @@
 #include <string>
 #include <list>
 #include <map>
+#include <memory>
 
 #include "List.h"
 #include "Traverser.h"
@@ -11,7 +12,22 @@
 //using std::cout;  omg, what's wrong with this?
 //using std::endl;
 
-class Menu_item
+class Menu_component // Component of Composite patterns
+{
+public:
+    virtual void add(Menu_component*);
+    virtual void remove(Menu_component*);
+
+    virtual void print() const;
+
+protected:
+    Menu_component(); //const char*);
+
+private:
+    const char* name_; // GoF has name, HF doesn't (in HF, Menu_component is abstract class)
+};
+
+class Menu_item : public Menu_component
 {
 public:
     Menu_item(const std::string& name, const std::string& desc, bool vegan, double price) :
@@ -25,7 +41,10 @@ public:
     bool is_vegan() const    { return vegan_; }
 
     // todo operator<<
-    void print() const;
+    void print() const override;
+
+    //// wait, why would this override??
+    //void add(Menu_component*) override;
 
 private:
     std::string name_;
@@ -34,25 +53,32 @@ private:
     double      price_;
 };
 
-class Menu
+class Menu : Menu_component
 {
 public:
-    Menu() { } 
-    Menu(const std::string& name) : name_(name) { }
+    //Menu() { } 
+    Menu(const std::string& name);// : name_(name) { }
 
     // shouldn't Menu be abstract?
 
     //void print(const std::string& extra = "") const; 
     virtual Iterator<Menu_item*>* create_iterator() const = 0;
 
-    virtual void print() const = 0; 
+    Iterator<Menu_component*>* create_iterator2() const; 
+    std::unique_ptr<Iterator<Menu_component*>> create_iterator3() const; 
+
+    virtual void print() const; 
 
     virtual ~Menu();
 
     std::string name() const { return name_; }
 
+    virtual void add(Menu_component*);
+
 protected:
     std::string name_;
+    
+    List<Menu_component*>* menu_items_; // what do submenus look like now? they all have containers
 };
 
 class Diner_menu : public Menu
@@ -62,9 +88,11 @@ public:
 
     Diner_menu(const std::string& name);
 
-    void add_item(const std::string& name, const std::string& desc, bool vegan, double price);
+    // don't think needed any longer
+    //void add_item(const std::string& name, const std::string& desc, bool vegan, double price);
 
-    void print() const override;
+    // don't think needed any longer
+    //void print() const override;
 
     Iterator<Menu_item*>* create_iterator() const override;
 

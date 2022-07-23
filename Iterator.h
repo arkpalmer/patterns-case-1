@@ -17,6 +17,9 @@ public:
 
     virtual T current_item() const = 0;
 
+    // need this for interface/abstract class or deletion of derived is undefined
+    virtual ~Iterator() { PFL }
+
 protected:
     // needed? class is Abstract so can't instantiate? TBD
     Iterator();
@@ -33,6 +36,8 @@ class List_iterator : public Iterator<T>
 {
 public:
     List_iterator(const List<T>* list); // explicit?
+
+    ~List_iterator() { PFL }
 
     void first() override;
     void next() override;
