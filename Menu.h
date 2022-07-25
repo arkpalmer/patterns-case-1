@@ -18,6 +18,8 @@ public:
     virtual void add(Menu_component*);
     virtual void remove(Menu_component*);
 
+    virtual std::unique_ptr<Iterator<Menu_component*>> create_iterator3() const; 
+
     virtual void print() const;
 
 protected:
@@ -64,8 +66,7 @@ public:
     //void print(const std::string& extra = "") const; 
     virtual Iterator<Menu_item*>* create_iterator() const = 0;
 
-    Iterator<Menu_component*>* create_iterator2() const; 
-    std::unique_ptr<Iterator<Menu_component*>> create_iterator3() const; 
+    std::unique_ptr<Iterator<Menu_component*>> create_iterator3() const override;
 
     virtual void print() const; 
 
@@ -81,6 +82,8 @@ protected:
     List<Menu_component*>* menu_items_; // what do submenus look like now? they all have containers
 };
 
+// all the derived menus are removed in HF (I think Gof is a bit different, compare before removing)
+// (I don't see the purpose of deriving, what would they override? i.e. agree with HF)
 class Diner_menu : public Menu
 {
 public:
@@ -94,7 +97,8 @@ public:
     // don't think needed any longer
     //void print() const override;
 
-    Iterator<Menu_item*>* create_iterator() const override;
+// to be removed, for now need to keep defn because create_iterator is pure virtual in base
+    Iterator<Menu_item*>* create_iterator() const override { PFL; return nullptr; }; // error if used, in process of deprecating
 
     virtual ~Diner_menu();
 

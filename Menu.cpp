@@ -27,6 +27,13 @@ Menu_component::Menu_component() // const char* name) :
 {
 }
 
+std::unique_ptr<Iterator<Menu_component*>> Menu_component::create_iterator3() const
+{
+    PFL
+    return nullptr;
+}
+
+
 // TODO what does Gof do? HF is exception I think 
 void Menu_component::add(Menu_component*) { cout << "add unimplemented" << endl; }
 void Menu_component::remove(Menu_component*) { cout << "remove unimplemented" << endl; }
@@ -36,13 +43,6 @@ Menu::Menu(const std::string& name) :
     name_(name) 
 { 
     menu_items_ = new List<Menu_component*>();
-}
-
-//    Iterator<Menu_component*> get_iterator() const;
-// Iterator<T>* List<T>::create_iterator()
-Iterator<Menu_component*>* Menu::create_iterator2() const
-{
-    return menu_items_->create_iterator();
 }
 
 std::unique_ptr<Iterator<Menu_component*>> Menu::create_iterator3() const
@@ -60,12 +60,6 @@ std::unique_ptr<Iterator<Menu_component*>> Menu::create_iterator3() const
 
     //return up;
 }
-#if 0
-Iterator<Menu_item*>* Diner_menu::create_iterator() const
-{
-    return new Diner_menu_iterator(items_);
-}
-#endif
 
 void Menu::print() const
 {
@@ -82,6 +76,17 @@ void Menu::print() const
         iter->next();
     }
     PFL
+}
+
+void delete_menu_items(std::unique_ptr<Iterator<Menu_component*>> items_iter)
+{
+    while (!items_iter->is_done())
+    {
+        auto item = items_iter->current_item();
+        //cout << "dtor: " << item->description() << endl;
+        delete item;
+        items_iter->next();
+    }
 }
 
 void delete_menu_items(Iterator<Menu_item*>* items_iter)
@@ -130,7 +135,7 @@ Diner_menu::Diner_menu(const std::string& name) :
 
 Diner_menu::~Diner_menu()
 {
-    delete_menu_items(create_iterator());
+    delete_menu_items(create_iterator3());
 
     delete items_;
 }
@@ -156,11 +161,6 @@ void Diner_menu::print() const
     }
 }
 #endif
-
-Iterator<Menu_item*>* Diner_menu::create_iterator() const
-{
-    return new Diner_menu_iterator(items_);
-}
 
 Cafe_menu::Cafe_menu(const std::string& name) :
     Menu(name)
